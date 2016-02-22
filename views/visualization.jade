@@ -1,0 +1,20 @@
+extends layout
+
+block tutorial
+    h2 Data Visualization Tutorial
+    p. 
+    |On this page users can view who has accessed their data or tried to access their data.  
+    |First two charts show organizations that were successfully able to access the users data.
+    |Last two charts show organization that were denied access to the users data.  
+    |The ideas in this demo could be expanded further but this all for now.  Thank you!
+    br
+    br
+
+block content
+    .center
+        h1 Data Visualization
+        .buttons
+            a(href='/dashboard') Dashboard
+            a(href='/dashboard/control') Data Access Control
+    block chart
+    

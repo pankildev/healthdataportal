@@ -1,0 +1,25 @@
+extends layout
+
+block tutorial
+    h2 Dashboard Page Tutorial
+    p. 
+    |After an user has logged in on the dashboard page they have two options:
+    |#[br]
+    |Option 1: Data Visualization - They can see a visualization of who accessed thier data. #[br]
+    |Option 2: Data Access Control - They can control who can or cannot access their data.  
+    |#[br]
+    |#[br]
+    |Hint:  If you view Data Access Control first you will have a better understaning of Data Visualization.
+    |To continue click the Data Access Control button.  
+    br
+    br
+block content
+    .center
+        h1 Dashboard
+        br
+        br
+        .buttons
+            a(href='/dashboard/visualization') Data Visualization
+            a(href='/dashboard/control') Data Access Control
+        br
+        br

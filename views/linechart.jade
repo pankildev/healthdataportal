@@ -1,0 +1,227 @@
+extends visualization
+
+block chart
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.14.0/vis.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js")
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/vis/4.14.0/vis.min.css', rel='stylesheet', type='text/css')
+    h2 Data Accessed Timeline
+    #visualization
+    h2 Data Accessed All Time Summary
+    #visualization2
+    h2 Data Accessed Denied Timeline
+    #visualization3
+    h2 Data Accessed Denied All Time Summary
+    #visualization4
+    script(type='text/javascript').
+        //console.log(!{JSON.stringify(accessdata)});
+        accessdata=!{JSON.stringify(accessdata)};
+        var mydata = [];
+        var totalData = {};
+        var minKeyTs = 9999999999;
+        var minKey = 0;
+        var maxKeyTs = 0;
+        var maxKey = 0;
+        for (var key in accessdata) {
+            if (accessdata.hasOwnProperty(key)) {
+                //console.log(key + " -> " + JSON.stringify(accessdata[key]));
+                if (key != "total" && key != "_id" && key != "_rev") {
+                    var datevalue = new moment(accessdata[key].timestamp*1000).format("YYYY-MM-DD HH:mm:ss");
+                    
+                    if (accessdata[key].timestamp < minKeyTs) {
+                        minKeyTs = accessdata[key].timestamp;
+                        minKey = datevalue;
+                    }
+                    if (accessdata[key].timestamp > maxKeyTs) {
+                        maxKeyTs = accessdata[key].timestamp;
+                        maxKey = datevalue;
+                    }
+                    
+                    for (var organizations in accessdata[key]) {
+                        if (accessdata[key].hasOwnProperty(organizations)) {
+                               if (organizations != "timestamp" && organizations != "date") {
+                                var access = {
+                                    x: datevalue, 
+                                    y: accessdata[key][organizations], 
+                                    group: organizations
+                                }
+                                mydata.push(access);
+                            }
+                        }
+                    }
+
+                }
+                if (key == "total"){
+                    totalData = accessdata[key];
+                }
+            }
+        }
+        
+        minKey = moment(minKey).subtract(4, 'hours').format("YYYY-MM-DD HH:mm:ss");
+        maxKey = moment(maxKey).add(4, 'hours').format("YYYY-MM-DD HH:mm:ss");
+
+        
+        var container = document.getElementById('visualization');
+        var dataset = new vis.DataSet(mydata);
+        var options = {
+            legend: true,
+            drawPoints: { style: 'circle' },
+            interpolation: false,
+            start: minKey,
+            end: maxKey
+        };
+        
+        var totalBarchartData = [];
+        var currentDate = new moment().format("YYYY-MM-DD HH:mm:ss");
+        var totalStartDate = moment().subtract(4, 'days').format("YYYY-MM-DD HH:mm:ss");
+        var totalEndDate = moment().add(4, 'days').format("YYYY-MM-DD HH:mm:ss");
+        var groups = new vis.DataSet();
+        for (var key in totalData) {
+            if (totalData.hasOwnProperty(key)) {
+                var barchartItem = {
+                    x: currentDate, 
+                    y: totalData[key], 
+                    group: key, 
+                    label : {
+                        content: totalData[key],
+                        xOffset: -35,
+                        yOffset: 15
+                    }
+                };
+                groups.add({
+                    id: key,
+                    content: key
+                });
+                
+                totalBarchartData.push(barchartItem);
+            }
+        }
+        
+        var bargraphcontainer = document.getElementById('visualization2');
+        //var bargraphdataset = new vis.DataSet(items);
+        var bargraphoptions = {
+          style:'bar',
+          stack:true,
+          legend: true,
+          barChart: {width:100, align:'center'}, // align: left, center, right
+          drawPoints: {
+              onRender: function(item, group, grap2d) {
+                return item.label != null;
+              },
+              style: 'circle'
+            },
+          dataAxis: {
+          icons:false
+          },
+          orientation:'top',
+          start: totalStartDate,
+          end: totalEndDate
+          };
+        var graph2d = new vis.Graph2d(container, dataset, groups, options);
+        var graph2d = new vis.Graph2d(bargraphcontainer, totalBarchartData, groups, bargraphoptions);
+
+    script(type='text/javascript').
+        //console.log(!{JSON.stringify(denydata)});
+        accessdata=!{JSON.stringify(denydata)};
+        var mydata = [];
+        var totalData = {};
+        var minKeyTs = 9999999999;
+        var minKey = 0;
+        var maxKeyTs = 0;
+        var maxKey = 0;
+        for (var key in accessdata) {
+            if (accessdata.hasOwnProperty(key)) {
+                //console.log(key + " -> " + JSON.stringify(accessdata[key]));
+                if (key != "total" && key != "_id" && key != "_rev") {
+                    var datevalue = new moment(accessdata[key].timestamp*1000).format("YYYY-MM-DD HH:mm:ss");
+                    
+                    if (accessdata[key].timestamp < minKeyTs) {
+                        minKeyTs = accessdata[key].timestamp;
+                        minKey = datevalue;
+                    }
+                    if (accessdata[key].timestamp > maxKeyTs) {
+                        maxKeyTs = accessdata[key].timestamp;
+                        maxKey = datevalue;
+                    }
+                    
+                    for (var organizations in accessdata[key]) {
+                        if (accessdata[key].hasOwnProperty(organizations)) {
+                               if (organizations != "timestamp" && organizations != "date") {
+                                var access = {
+                                    x: datevalue, 
+                                    y: accessdata[key][organizations], 
+                                    group: organizations
+                                }
+                                mydata.push(access);
+                            }
+                        }
+                    }
+
+                }
+                if (key == "total"){
+                    totalData = accessdata[key];
+                }
+            }
+        }
+        
+        minKey = moment(minKey).subtract(4, 'hours').format("YYYY-MM-DD HH:mm:ss");
+        maxKey = moment(maxKey).add(4, 'hours').format("YYYY-MM-DD HH:mm:ss");
+
+        
+        var container = document.getElementById('visualization3');
+        var dataset = new vis.DataSet(mydata);
+        var options = {
+            legend: true,
+            drawPoints: { style: 'circle' },
+            interpolation: false,
+            start: minKey,
+            end: maxKey
+        };
+        
+        var totalBarchartData = [];
+        var currentDate = new moment().format("YYYY-MM-DD HH:mm:ss");
+        var totalStartDate = moment().subtract(4, 'days').format("YYYY-MM-DD HH:mm:ss");
+        var totalEndDate = moment().add(4, 'days').format("YYYY-MM-DD HH:mm:ss");
+        var groups = new vis.DataSet();
+        for (var key in totalData) {
+            if (totalData.hasOwnProperty(key)) {
+                var barchartItem = {
+                    x: currentDate, 
+                    y: totalData[key], 
+                    group: key, 
+                    label : {
+                        content: totalData[key],
+                        xOffset: -35,
+                        yOffset: 15
+                    }
+                };
+                groups.add({
+                    id: key,
+                    content: key
+                });
+                
+                totalBarchartData.push(barchartItem);
+            }
+        }
+        
+        var bargraphcontainer = document.getElementById('visualization4');
+        //var bargraphdataset = new vis.DataSet(items);
+        var bargraphoptions = {
+          style:'bar',
+          stack:true,
+          legend: true,
+          barChart: {width:100, align:'center'}, // align: left, center, right
+          drawPoints: {
+              onRender: function(item, group, grap2d) {
+                return item.label != null;
+              },
+              style: 'circle'
+            },
+          dataAxis: {
+          icons:false
+          },
+          orientation:'top',
+          start: totalStartDate,
+          end: totalEndDate
+          };
+        var graph2d = new vis.Graph2d(container, dataset, groups, options);
+        var graph2d = new vis.Graph2d(bargraphcontainer, totalBarchartData, groups, bargraphoptions);

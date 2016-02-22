@@ -1,0 +1,14 @@
+{
+  "name": "hdr",
+  "version": "1.0.0",
+  "description": "Health Data Request Server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pankil",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

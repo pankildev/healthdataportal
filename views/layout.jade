@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  header
+    .navigation-header
+        h1 #[a(href="/") #{title}]
+  body
+    .container
+        .main-content
+            block content
+    block tutorial
+    footer
+        .footer-style
+            p Built Using: IBM Bluemix Cloudant (NoSQL DB), Jade, NodeJs, Express, MomentJs, VisJs
+            p.
+            |Tweet your feedback/quesitons to me: #[a.twitter-mention-button(href='https://twitter.com/intent/tweet?screen_name=pankil_dave') Tweet to @pankil_dave]
+            script.
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');

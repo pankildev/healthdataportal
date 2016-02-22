@@ -1,0 +1,98 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #F5F1EE;
+  color: #0C2B48;
+}
+
+a {
+  color: #1b95e0;
+}
+
+.buttons a {
+    font-size: 18px;
+    /*color: #1b95e0;*/
+    color: #F9FDFF;
+    background: #0c2b48;
+    text-decoration: none;
+    padding: 5px;
+    margin: 1px;
+    white-space: nowrap
+}
+
+.buttons a:hover {
+    color: #0c2b48;
+    /*background: #1b95e0;*/
+    background: #F9FDFF;
+    border: coral;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.small-buttons a {
+    font-size: 14px !important;
+}
+
+.center {   
+ text-align: center;
+}
+
+.main-content {
+    padding: 20px;
+    display: flex;
+}
+
+.navigation-header {
+    padding: 10px;
+    text-align: center;
+    border-bottom: solid 5px #FF5F0A;
+    text-decoration: blink;
+    background: #000000;
+}
+
+.navigation-header a {
+    text-decoration: none;
+    color: beige;
+}
+
+.footer-style {
+    border-top: solid 5px #FF5F0A;
+    background: #333;
+    color: beige;
+    padding: 10px;
+}
+
+.login {
+    padding: 30px;
+}
+
+.login a {
+    font-size: 36px !important;
+}
+
+.small-buttons li {
+    padding: 10px;
+    font-size: 18px;
+}
+
+.requests {
+    width: 50%;
+    height: 100%;
+    float: left;
+    min-width: 370px;
+}
+
+.response {
+    width: 50%;
+    height: 100%;
+    float: left; 
+    min-width: 370px;
+}
+
+.bottom {
+    display: block;
+}
+
+#requestdetails {
+    word-wrap: break-word;
+}

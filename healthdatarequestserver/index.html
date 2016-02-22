@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <title>Health Data Request Server</title>
+        <link rel="stylesheet" href="./style.css">
+        
+        <script>
+    		function sendget(id){
+    		    // 0 = "Big Blue Software Company Health API"
+    		    // 1 = "Dr. Joy (Family Doctor)"
+    		    // 2 = "We Care"
+    		    // 3 = "Local Public Health"
+    		    // 4 = "Insurance Company"
+    		    // 5 = "Data Theif"
+    		    
+    		    if (id > 5)
+    		        id = 6;
+    		    
+    		    var orgs = [
+    		        "Big Blue Software Company Health API",
+    		        "Dr. Joy (Family Doctor)",
+    		        "We Care",
+    		        "Local Public Health",
+    		        "Insurance Company",
+    		        "Data Theif",
+    		        "You did not specify an organization."
+    		        ];
+    		    
+    		    var tokens = [
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCaWcgQmx1ZSBTb2Z0d2FyZSBDb21wYW55IEhlYWx0aCBBUEkiLCJpc3MiOiJoZHAifQ.jJ1kQx76nx4eIHx_MfWIamIx-jP1KOIhGVMeoYy9t3M",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEci4gSm95IChGYW1pbHkgRG9jdG9yKSIsImlzcyI6ImhkcCJ9.ef9t5JrWUwH-c_qQPGDHYItwQK9yaiglr5TIV81KNDo",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXZSBDYXJlIiwiaXNzIjoiaGRwIn0.nUTeDZePxHNs-ZCjxXp4mo4mwWOZEPijgtyFLExdx20",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMb2NhbCBQdWJsaWMgSGVhbHRoIiwiaXNzIjoiaGRwIn0.qpraTIzV9P-J3n7YlF3xa1SGtqZj28RaH4Pajbl2H_w",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJJbnN1cmFuY2UgQ29tcGFueSIsImlzcyI6ImhkcCJ9.pu-_baVRY_8nvv8rc5exGsgwkLJWDCdlBNO20KKH3a0",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEYXRhIFRoZWlmIiwiaXNzIjoiaGRwIn0.AKemTlePIpd_t5WkIgI9LZH4zfYanQhG_yQMRBFEEd8",
+                    "invalidtoken.invalidtoken.invalidtoken"
+    		        ];
+    		    console.log(id);
+    		    console.log(tokens[id]);
+                var result = $.ajax({
+                    url: "http://169.44.60.123:3000/api/pankil/data",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("x-access-token", tokens[id]);
+                    },
+                    type: "GET",
+                    success: function() { 
+                        $("p#requestorg").text("Request Organization:");
+                        $("p#requestdetails").text(orgs[id] + ": JWT Token = " + tokens[id]);
+                        $("p#responsestatus").text("The response status is: " + result.statusText + " (" + result.status + ")");
+                        $("p#responsebody").text("The response body is: " + result.responseText);
+                    },
+                    error: function() { 
+                        $("p#requestorg").text("Request Organization:");
+                        $("p#requestdetails").text(orgs[id] + ": JWT Token = " + tokens[id]);
+                        $("p#responsestatus").text("The response status is: " + result.statusText + " (" + result.status + ")");
+                        $("p#responsebody").text("The response body is: " + result.responseText);
+                    }
+                });
+            }
+    	</script>
+        
+    </head>
+   <body>
+<header>
+      <div class="navigation-header">
+         <h1><a href="/">Health Data Request Server</a></h1>
+      </div>
+   </header>
+      <div class="container">
+         <div class="main-content">
+             <div class="requests">
+                <h2>Requests</h2>
+                <div class="buttons">
+                    <br />
+                     <a id="button1"
+                        onclick='sendget(0)'>
+                        Big Blue Software Company Health API</a>
+                    <br /><br />
+                     <a id="button2"
+                        onclick='sendget(1)'
+                        >
+                        Dr. Joy (Family Doctor)</a>
+                    <br /><br />   
+                     <a id="button3"
+                        onclick='sendget(2)'
+                        >
+                        We Care</a>
+                    <br /><br /> 
+                     <a id="button4"
+                        onclick='sendget(3)'
+                        >
+                        Local Public Health</a>
+                    <br /><br />    
+                     <a id="button5"
+                        onclick='sendget(4)'
+                        >
+                        Insurance Company</a>
+                    <br /><br />   
+                     <a id="button6"
+                        onclick='sendget(5)'
+                        >
+                        Data Theif</a>
+                    <br /><br />
+                </div>
+            </div>
+            <div class="response">
+                <h2>Response</h2>
+                <div class="text">
+                    <p id="requestorg"></p>
+                    <p id="requestdetails"></p>
+                    <p id="responsestatus"></p>
+                    <p id="responsebody"></p>
+                </div>
+            </div>
+        </div>
+      </div>
+        <div class="bottom">
+          <h2>Health Data Request Server</h2>
+          <p></p>
+          Use this page to send request for health data to the Health Data Portal.
+          In this case there is a health document stored on the Health Data Portal but in the future the portal could act as a reverse proxy.  
+          <p></p>
+          Remeber to go back to visualize the request data: <a href="http://169.44.60.123:3000/dashboard/visualization" target="_blank">Data Visualization</a>
+          <br><br>
+          <footer>
+             <div class="footer-style">
+                <p>Built Using: NodeJs, Express, HTML, CSS, jQuery, Ajax</p>
+                <p></p>
+                Tweet your feedback/quesitons to me: <a href="https://twitter.com/intent/tweet?screen_name=pankil_dave" class="twitter-mention-button">Tweet to @pankil_dave</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+             </div>
+          </footer>
+        </div>
+   </body>
+</html>

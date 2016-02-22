@@ -1,0 +1,53 @@
+extends layout
+
+block tutorial
+    h2 Data Access Control Tutorial
+    p. 
+    |On this page users can control who can access their data. 
+    |After the user adds an organization to the white list this organiztation will be allowed to view the users data. 
+    |#[br]#[br]
+    |When an organization tries to access the users data.  
+    |The application will first authenticate the organization  (check if they are who they say they are).
+    |This is done by looking at their JWT token which was assinged to them when the organization registered (out of scope for this hackathon).
+    |#[br]#[br]
+    |After they are authenticated the application check if they are authorized to access the data (check if the user has allowed them to see the data).
+    |#[br]- If they are in the white list the users data will be sent to the organization.
+    |#[br]- If they are not on the white list they will not get access to the data.
+    |#[br]In both of these cases an audit record is created for the data owner (the user).  The audits can be viewed visually in the visualization section.
+    |#[br]#[br]
+    |Hopefully the above explanation gives you a good overview of how this ecosystem functions.
+    |#[br]#[br]
+    |Now, to demonstrate the above idea I have created a seperate server to perfrom API requests.
+    |Before you go to the API server on this page please select the organization that should be allowed to access your data.  
+    |#[br]#[br]All done?#[br]#[br]
+    |Now lets go to the API page form there you can send request for data as different organizations here is the link:
+    |#[br]
+    |#[a(href="http://169.44.60.123:4000/" target="_blank") Health Data Request Server]
+    |#[br]
+    |Don't forget to go checkout the data visualization section after you have sent some requests via the API server.
+    br
+    br
+block content
+    .center
+        h1 Data Access Control
+        .buttons
+            a(href='/dashboard') Dashboard
+            a(href='/dashboard/visualization') Data Visualization
+    .content
+        .buttons
+            .small-buttons
+                h2 White List
+                ul
+                    each val in organizations.whitelist.length ? organizations.whitelist : ['There are no organization in this list.']
+                        if organizations.whitelist.length > 0
+                            li #[a(href="/dashboard/control/remove/" + val) Remove] #{val}
+                        else
+                            li= val 
+         
+                h2 Available Organizations
+                ul
+                    each val in organizations.available.length ? organizations.available : ['There are no organization in this list.']
+                        if organizations.available.length > 0
+                            li #[a(href="/dashboard/control/add/" + val) Add] #{val}
+                        else
+                            li= val 
