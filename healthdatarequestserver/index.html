@@ -44,6 +44,7 @@
                         xhr.setRequestHeader("x-access-token", tokens[id]);
                     },
                     type: "GET",
+                    cache: false,
                     success: function() { 
                         $("p#requestorg").text("Request Organization:");
                         $("p#requestdetails").text(orgs[id] + ": JWT Token = " + tokens[id]);
